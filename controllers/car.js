@@ -37,7 +37,7 @@ exports.bookCar = function(req, res) {
 
 exports.showAvailableCars = function(req, res) {
     const response={};
-    Car.showAvailable(req.body.filters, (err, cars) => {
+    Car.getAllAvailable(req.body.filters, (err, cars) => {
         if(err) {
             response.success=false;
             response.error=err;
@@ -47,6 +47,56 @@ exports.showAvailableCars = function(req, res) {
             response.success=true;
             response.message='Found available cars successfully';
             response.cars=cars;
+            return res.status(200).json(response);
+        }
+    });
+}
+
+exports.getCarById = function(req,res) {
+    const response={};
+    Car.getDetails(req.params.carId, (err, car) => {
+        if(err) {
+            response.success=false;
+            response.error=err;
+            return res.status(400).json(response);
+        }
+        else {
+            response.success=true;
+            response.message='Found car successfully';
+            response.car=car;
+            return res.status(200).json(response);
+        }
+    });
+}
+
+exports.updateCarById = function(req, res) {
+    const response={};
+    Car.updateDetails(req.params.carId, updates, (err, car) => {
+        if(err) {
+            response.success=false;
+            response.error=err;
+            return res.status(400).json(response);
+        }
+        else {
+            response.success=true;
+            response.message='Updated car successfully';
+            response.car=car;
+            return res.status(200).json(response);
+        }
+    });
+}
+
+exports.removeCarById = function(req, res) {
+    const response={};
+    Car.remove(req.params.carId, err => {
+        if(err) {
+            response.success=false;
+            response.error=err;
+            return res.status(400).json(response);
+        }
+        else {
+            response.success=true;
+            response.message=`Deleted car id ${carId} successfully`;
             return res.status(200).json(response);
         }
     });

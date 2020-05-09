@@ -25,11 +25,6 @@ const carSchema = new mongoose.Schema({
         trim:true,
         required:true
     },
-    activeBooking: {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Booking',
-        default:null
-    },
     bookingHistory: [{type:mongoose.Schema.Types.ObjectId, ref:'Booking'}]
 }, {timestamps:true});
 
