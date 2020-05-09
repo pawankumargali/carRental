@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema({
-    customerName: {
+    username: {
         type:String,
         trim:true,
         required:true
     },
-    customerContact:{
+    contact:{
         type:String,
         trim:true,
         required:true,
-        unique:true
     },
     issueDate: {
         type:Date,
@@ -18,6 +17,14 @@ const bookingSchema = new mongoose.Schema({
     },
     returnDate: {
         type:Date,
+        required:true
+    },
+    car: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Car'
+    },
+    bill: {
+        type:Number,
         required:true
     }
 }, {timestamps:true});

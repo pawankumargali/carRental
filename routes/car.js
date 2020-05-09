@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const { addCar } = require('../controllers/car');
-const { newCarInputValidator } = require('../input_validators/car');
+const { addCar, bookCar, showAvailableCars } = require('../controllers/car');
+const { carInputValidator, bookingInputValidator, showCarsInputValidator } = require('../input_validators/index');
 
-router.post('/car/add', newCarInputValidator, addCar);
+router.post('/car/add', carInputValidator, addCar);
+router.post('/car/book/:carId', bookingInputValidator, bookCar);
+router.post('/cars', showCarsInputValidator, showAvailableCars)
 
 module.exports=router;
