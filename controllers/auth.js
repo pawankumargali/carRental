@@ -2,15 +2,16 @@ const User = require('../services/user');
 
 exports.signUp = function(req,res) {
     const response = {};
-    User.register(req.body, err => {
+    User.register(req.body, (err, role) => {
         if(err) {
             response.success=false;
             response.error=err;
             return res.status(400).json(response);
         }
         else {
+            const userType = role===1 ? 'Admin user' : 'user';
             response.success=true;
-            response.message='Registered user successfully. Proceed to Login';
+            response.message=`Registered ${userType} successfully. Proceed to Login`;
             return res.status(200).json(response);
         }
     });
@@ -26,7 +27,8 @@ exports.signIn = function(req,res) {
         }
         else {
             response.success=true;
-            response.message='Login Successful';
+            response.message='Login Successful. Use token in authorization header for further requests.';
+            response.expiry = '1 hour';
             response.token = token;
             return res.status(200).json(response);
         }

@@ -1,9 +1,9 @@
 exports.signUpValidator = function(req, res, next) {
-    const { name, email, password, contact } = req.body;
     const response={};
     response.success=false;
+    const { name, email, password, contact } = req.body;
     if(!name || !email || !password || !contact) {
-        response.message='Missing fields: All fields name, email, password and contact are required';
+        response.message='Missing fields: Fields name, email, password and contact are required';
         return res.status(400).json(response);
     }    
     if(!isValidEmail(email)) {
@@ -20,7 +20,7 @@ exports.signUpValidator = function(req, res, next) {
     const hasSpecialCharacter = password.match(/(?=.*[\!\@\#\$\%\^\&\*])/);
     if(!hasLowerCaseLetter || !hasUpperCaseLetter || !hasDigit || !hasSpecialCharacter) {
         response.message = 'Password must contain atleast 1 lower-case letter, 1 upper-case letter, 1 digit and 1 special character';
-        response.status(400).json(response);
+        return res.status(400).json(response);
     }
     return next();
 }
@@ -28,7 +28,13 @@ exports.signUpValidator = function(req, res, next) {
 
 
 exports.signInValidator = function(req, res, next) {
-    const { email } = req.body;
+    const response={};
+    response.success=false;
+    const { email, password } = req.body;
+    if(!email || !password) {
+        response.message='Fields email, password are required';
+        return res.status(400).json(response);
+    }
     if(!isValidEmail(email)) {
         response.message = 'Please enter valid email id';
         return res.status(400).json(response);
@@ -41,4 +47,3 @@ function isValidEmail(email) {
     if(email.match(emailRegExp)) return true;
     return false;
 }
-

@@ -19,7 +19,7 @@ exports.addCar = function(req, res) {
 
 exports.bookCar = function(req, res) {
     const response = {};
-    Car.bookById(req.params.carId, req.body, (err, bookingDetails) => {
+    Car.bookById(req.params.carId, req.auth, req.body, (err, bookingDetails) => {
         if(err) {
             response.success=false;
             response.error=err;
@@ -37,7 +37,7 @@ exports.bookCar = function(req, res) {
 
 exports.showAvailableCars = function(req, res) {
     const response={};
-    Car.getAllAvailable(req.body.filters, (err, cars) => {
+    Car.getAllAvailable(req.body.filters, req.query.limit, (err, cars) => {
         if(err) {
             response.success=false;
             response.error=err;
@@ -54,6 +54,7 @@ exports.showAvailableCars = function(req, res) {
 
 exports.getCarById = function(req,res) {
     const response={};
+    console.log('Here');
     Car.getDetails(req.params.carId, (err, car) => {
         if(err) {
             response.success=false;
@@ -71,7 +72,7 @@ exports.getCarById = function(req,res) {
 
 exports.updateCarById = function(req, res) {
     const response={};
-    Car.updateDetails(req.params.carId, updates, (err, car) => {
+    Car.updateDetails(req.params.carId, req.body, (err, car) => {
         if(err) {
             response.success=false;
             response.error=err;
@@ -96,7 +97,7 @@ exports.removeCarById = function(req, res) {
         }
         else {
             response.success=true;
-            response.message=`Deleted car id ${carId} successfully`;
+            response.message=`Deleted car id ${req.params.carId} successfully`;
             return res.status(200).json(response);
         }
     });
