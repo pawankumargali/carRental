@@ -173,8 +173,8 @@ _isBookedBetweenDates(startDate, endDate, carId, callback) {
 }
 
 _getBookingBill(rentPerDay, startDate, endDate) {
-    const lastDay = new Date(startDate).toISOString();
-    const firstDay = new Date(endDate).toISOString();
+    const lastDay = Date.parse(new Date(startDate).toISOString());
+    const firstDay = Date.parse(new Date(endDate).toISOString());
     const totalDays = Math.ceil((lastDay-firstDay)/(1000*60*60*24));
     return totalDays*rentPerDay;
 }

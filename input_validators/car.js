@@ -61,3 +61,14 @@ function isValidDate(dateString) {
     if(isNaN(dateNum)) return false;
     else return true;
 }
+
+
+
+exports.updateCarInputValidator = function(req, res, next) {
+    const { seatingCapacity, model } = req.body;
+    if(!seatingCapacity && !model) return next();
+    const response={};
+    response.success=false;
+    response.message='Updates allowed only for fields rentPerDay, city, vehicleNo';
+    return res.status(400).json(response);      
+}
