@@ -23,6 +23,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // APP ROUTES MIDDLEWARE
+const authRouter = require('./routes/auth');
 const carRouter = require('./routes/car');
 
+app.use('/api',authRouter);
 app.use('/api', carRouter);

@@ -24,6 +24,7 @@ exports.bookingInputValidator = function(req, res, next) {
     else return next();
 }
 
+
 exports.showCarsInputValidator = function(req, res, next) {
     return next();
 }

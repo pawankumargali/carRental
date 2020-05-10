@@ -1,15 +1,9 @@
 const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema({
-    username: {
-        type:String,
-        trim:true,
-        required:true
-    },
-    contact:{
-        type:String,
-        trim:true,
-        required:true,
+    user: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
     },
     issueDate: {
         type:Date,
